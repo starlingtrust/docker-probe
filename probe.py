@@ -26,6 +26,9 @@ parser.add_argument("--show-disks", action = "store_true", default = False,
 parser.add_argument("--show-content", metavar = "PATH", action = "append",
     help = "Add information about files and directories in PATH")
 
+parser.add_argument("--show-env", action = "store_true", default = False,
+    help = "Add information about environment variables")
+
 parser.add_argument("--format",
     choices = ["json", "json-compact", "yaml"], default = "json",
     help = "Format of the report (default: %(default)s)")
@@ -51,6 +54,7 @@ def _format_integers(d):
     return d_
 
 report = {
+    "location": os.path.dirname(os.path.abspath(__file__)),
     "time": {
         "epoch": time.time(),
         "datetime_utc": datetime.datetime.utcnow().isoformat(),
@@ -130,6 +134,9 @@ if (args.show_content is not None):
 
         report["content"].append({
             "path": path, "content": content})
+
+if (args.show_env):
+    report["env"] = dict(os.environ)
 
 if (args.format == "json"):
     report = json.dumps(report,

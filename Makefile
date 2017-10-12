@@ -11,7 +11,8 @@ destroy:
 
 .PHONY: test
 test:
-	@docker run probe:$(VERSION) \
+	@docker run --hostname probe_test probe:$(VERSION) \
 	  --show-memory \
+	  --show-env \
 	  --format yaml \
 	  --to-stdout
