@@ -3,7 +3,7 @@ VERSION := $(shell git describe --abbrev=0 --tags)
 
 .PHONY: build
 build:
-	@docker build --tag probe:$(VERSION) .
+	@docker build --squash --tag probe:$(VERSION) .
 
 .PHONY: destroy
 destroy:
