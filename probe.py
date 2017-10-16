@@ -13,7 +13,7 @@ import os
 import sys
 
 __project_name__ = "Probe"
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 parser = argparse.ArgumentParser()
 
