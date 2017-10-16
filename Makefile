@@ -1,5 +1,5 @@
 
-VERSION := $(shell git describe --abbrev=0 --tags)
+VERSION := $(shell ./probe.py --version)
 
 .PHONY: build
 build:
