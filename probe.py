@@ -12,6 +12,9 @@ import yaml
 import os
 import sys
 
+__project_name__ = "Probe"
+__version__ = "0.1.0"
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument("--sleep", type = int,  metavar = "SECONDS",
@@ -41,6 +44,9 @@ parser.add_argument("--to-stderr", action = "store_true",
 
 parser.add_argument("--to-file", metavar = "FILE",
     help = "Output the report to a file")
+
+parser.add_argument("--version", action = "version",
+    version = __version__)
 
 args = parser.parse_args()
 
