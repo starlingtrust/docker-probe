@@ -60,6 +60,7 @@ def _format_integers(d):
     return d_
 
 report = {
+    "version": __version__,
     "location": os.path.dirname(os.path.abspath(__file__)),
     "time": {
         "epoch": time.time(),
