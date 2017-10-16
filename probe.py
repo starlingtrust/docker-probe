@@ -153,6 +153,9 @@ elif (args.format == "yaml"):
         explicit_start = True,
         default_flow_style = False)
 
+if (not report.endswith("\n")):
+    report += "\n"
+
 if (args.sleep):
     time.sleep(args.sleep)
 
@@ -163,5 +166,5 @@ if (args.to_stderr):
     print(report, file = sys.stderr)
 
 if (args.to_file):
-    with open(args.to_file, "w") as fh:
+    with open(args.to_file, "a") as fh:
         fh.write(report)
