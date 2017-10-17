@@ -1,22 +1,22 @@
 ## Probe
 
-**Probe** is a [Docker](https://www.docker.com/)ized lightweight utility that can be used to test Docker-based dataflow pipelines by acting as a dummy job.
+**Probe** is a [Docker](https://www.docker.com/)ized lightweight command-line utility that can be used to test Docker-based dataflow pipelines by acting as a dummy job.
 
-**Probe** can also report on the (virtual) hardware and software environment found inside the Docker container it runs in. It can confirm that the containers have been set up with the right compute resources (CPU, memory and disk).
+**Probe** can also report on the (virtual) hardware and software environment found inside the Docker container it runs inside of. **Probe** can export its report in JSON or YAML format, suitable for downstream parsing. This makes it possible to run integration tests for dataflow pipelines, confirming that jobs receive the resources (CPU, memory and disk) they requested to run.
 
 ### Quickstart
 
-For convenience a `Makefile` is provided to create a Docker image tagged with **Probe**'s version. It can also be used to destroy the image, or run it with a default report:
+**Probe** is meant to run as a Docker container, and as such a `Dockerfile` is provided to create a Docker image. For convenience a `Makefile` is also provided to create an image tagged with **Probe**'s current version. It can also be used to destroy the image, or run it to produce a basic report:
 
 ```
-$ make create  # create a tagged image
-$ make destroy # destroy the image
-$ make test    # request a report from the probe
+$ make create   # create a tagged image
+$ make destroy  # destroy the tagged image
+$ make test     # run the image and display a report
 ```
 
 ### Usage
 
-`docker run <image> [options]` with `options` as such:
+Run `docker run <image> [options]` with `options` as such:
 
 ```
 usage: [-h] [--sleep SECONDS] [--show-memory] [--show-disks]
