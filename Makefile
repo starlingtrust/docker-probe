@@ -1,5 +1,5 @@
 
-VERSION := $(shell ./probe.py --version)
+VERSION := "0.1.2"
 
 .PHONY: build
 build:

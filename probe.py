@@ -12,7 +12,7 @@ import yaml
 import os
 import sys
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 parser = argparse.ArgumentParser()
 
