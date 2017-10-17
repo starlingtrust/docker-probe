@@ -3,9 +3,12 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[requires]
+python_version = "3.6.2"
+
 [packages]
 psutil = "*"
 pyyaml = "*"
 
 [dev-packages]
-"bump2version" = "*"
+bump2version = "*"
