@@ -1,16 +1,16 @@
 
 VERSION := "0.1.2"
 
-.PHONY: build
-build:
+.PHONY: build_image
+build_image:
 	@docker build --squash --tag probe:$(VERSION) .
 
-.PHONY: destroy
-destroy:
+.PHONY: destroy_image
+destroy_image:
 	@docker rmi --force probe:$(VERSION)
 
-.PHONY: test
-test:
+.PHONY: test_image
+test_image:
 	@docker run --hostname probe_test probe:$(VERSION) \
 	  --show-memory \
 	  --show-env \
