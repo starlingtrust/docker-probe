@@ -44,6 +44,10 @@ parser.add_argument("--to-stderr", action = "store_true",
 parser.add_argument("--to-file", metavar = "FILE",
     help = "Output the report to a file")
 
+parser.add_argument("--exit-with-code",
+    type = int, metavar = "INTEGER", default = 0,
+    help = "Exit code (default: %(default)d)")
+
 parser.add_argument("--version", action = "version",
     version = __version__)
 
@@ -174,3 +178,5 @@ if (args.to_stderr):
 if (args.to_file):
     with open(args.to_file, "a") as fh:
         fh.write(report)
+
+sys.exit(args.exit_with_code)
