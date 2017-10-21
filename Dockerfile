@@ -14,4 +14,4 @@ RUN apk add --no-cache --virtual build_dependencies \
  && pipenv install --ignore-pipfile --system \
  && apk del build_dependencies
 
-ENTRYPOINT ["python", "probe.py"]
+ENTRYPOINT ["python", "/app/probe.py"]
