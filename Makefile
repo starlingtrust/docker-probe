@@ -3,11 +3,11 @@ VERSION := "0.2.1"
 
 .PHONY: build_image
 build_image:
-	@docker build --squash --tag probe:$(VERSION) .
+	@docker build --squash --tag probe:$(VERSION) --tag probe:latest .
 
 .PHONY: destroy_image
 destroy_image:
-	@docker rmi --force probe:$(VERSION)
+	@docker rmi --force probe:$(VERSION) probe:latest
 
 .PHONY: test_image
 test_image:
