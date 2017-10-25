@@ -140,7 +140,10 @@ if (args.show_content is not None):
                     "permissions": permissions,
                     "user": user, "group": group})
 
-            content.sort(key = lambda entry: entry["path"])
+            if (len(content) > 0):
+                content.sort(key = lambda entry: entry["path"])
+            else:
+                content = "EMPTY"
 
         report["content"].append({
             "path": path, "content": content})
