@@ -35,6 +35,7 @@ class IntegrationTests (unittest.TestCase):
         with docker_client() as client:
             with probe(client, "--show-env", environment = environment) as stdout:
                 report = json.loads(stdout)
+                self.assertTrue("env" in report)
                 for (key, value) in environment.items():
                     self.assertTrue(key in report["env"])
                     self.assertEqual(value, report["env"][key])
