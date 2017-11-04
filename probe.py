@@ -14,7 +14,7 @@ import sys
 
 __version__ = "0.3.1"
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(allow_abbrev = False)
 
 parser.add_argument("--sleep", type = int,  metavar = "SECONDS",
     help = "Pause the job for a given amount of time (in seconds)")
