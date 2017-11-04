@@ -31,6 +31,7 @@ optional arguments:
   --show-disks          Add information about disk partitions and usage
   --show-content PATH   Add information about files and directories in PATH
   --show-env            Add information about environment variables
+  --show-args           Add information about command line arguments
   --format {json,json-compact,yaml}
                         Format of the report (default: json)
   --to-stdout           Output the report on the standard output stream
