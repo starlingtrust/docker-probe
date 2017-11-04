@@ -186,10 +186,12 @@ if (args.sleep):
     time.sleep(args.sleep)
 
 if (args.to_stdout):
-    print(report, file = sys.stdout)
+    sys.stdout.write(report)
+    sys.stdout.flush()
 
 if (args.to_stderr):
-    print(report, file = sys.stderr)
+    sys.stderr.write(report)
+    sys.stderr.flush()
 
 if (args.to_file):
     with open(args.to_file, "a") as fh:
