@@ -31,6 +31,9 @@ parser.add_argument("--show-content", metavar = "PATH", action = "append",
 parser.add_argument("--show-env", action = "store_true", default = False,
     help = "Add information about environment variables")
 
+parser.add_argument("--show-args", action = "store_true", default = False,
+    help = "Add information about command line arguments")
+
 parser.add_argument("--format",
     choices = ["json", "json-compact", "yaml"], default = "json",
     help = "Format of the report (default: %(default)s)")
@@ -51,7 +54,14 @@ parser.add_argument("--exit-with-code",
 parser.add_argument("--version", action = "version",
     version = __version__)
 
-args = parser.parse_args()
+# separate this program's arguments from extra arguments, if any
+if ("--" in sys.argv):
+    i = sys.argv.index("--")
+    args, extra_args = sys.argv[:i], sys.argv[i+1:]
+else:
+    args, extra_args = sys.argv, []
+
+args = parser.parse_args(args[1:])
 
 def _format_integers(d):
     d_ = {}
@@ -150,6 +160,9 @@ if (args.show_content is not None):
 
 if (args.show_env):
     report["env"] = dict(os.environ)
+
+if (args.show_args):
+    report["args"] = extra_args
 
 if (args.format == "json"):
     report = json.dumps(report,

@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 
-import functools
 import json
 import unittest
 import uuid
-import os
 
 from test_utils import *
 import docker.errors
@@ -39,6 +37,16 @@ class IntegrationTests (unittest.TestCase):
                 for (key, value) in environment.items():
                     self.assertTrue(key in report["env"])
                     self.assertEqual(value, report["env"][key])
+
+    def test_arguments_parsing(self):
+        args = ["--long", "-s", "1234", "a b c", "'a b c'"]
+        with docker_client() as client:
+            with probe(client, "--show-args", "--", *args) as stdout:
+                report = json.loads(stdout)
+                self.assertTrue("args" in report)
+                self.assertEqual(len(args), len(report["args"]))
+                for (expected, observed) in zip(args, report["args"]):
+                    self.assertEqual(expected, observed)
 
     def test_exit_code(self):
         with docker_client() as client:
