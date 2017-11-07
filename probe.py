@@ -3,14 +3,15 @@
 import argparse
 import datetime
 import platform
-import psutil
 import pwd
 import grp
 import time
 import json
-import yaml
 import os
 import sys
+
+import psutil
+import yaml
 
 __version__ = "0.3.2"
 
@@ -63,15 +64,6 @@ else:
 
 args = parser.parse_args(args[1:])
 
-def _format_integers(d):
-    d_ = {}
-    for (key, value) in d.items():
-        d_[key] = value
-        if (isinstance(value, int)):
-            d_[key + "_readable"] = "{:,}".format(value)
-
-    return d_
-
 report = {
     "version": __version__,
     "location": os.path.dirname(os.path.abspath(__file__)),
@@ -92,10 +84,19 @@ report = {
         "number_logical": psutil.cpu_count(),
         "number_physical": psutil.cpu_count(logical = False)}}
 
+def _format_integers(d):
+    d_ = {}
+    for (key, value) in d.items():
+        d_[key] = value
+        if (isinstance(value, int)):
+            d_[key + "_readable"] = "{:,}".format(value)
+    
+    return d_
+
 if (args.show_memory):
-    report.update(memory = {
+    report["memory"] = {
         "virtual": _format_integers(psutil.virtual_memory()._asdict()),
-        "swap": _format_integers(psutil.swap_memory()._asdict())})
+        "swap": _format_integers(psutil.swap_memory()._asdict())}
 
 if (args.show_disks):
     partitions = [dict(nt._asdict()) for nt in psutil.disk_partitions()]
@@ -110,7 +111,7 @@ def _format_permissions(st_mode):
     return "".join(to_str.get(x, x) for x in str(oct(st_mode)[-3:]))
 
 if (args.show_content is not None):
-    report.update(content = [])
+    report["content"] = []
 
     def tree(path):
         with os.scandir(path) as entries:
