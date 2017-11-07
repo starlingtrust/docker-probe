@@ -1,6 +1,6 @@
 
 IMAGE_NAME := "probe"
-IMAGE_VERSION := "0.3.2"
+IMAGE_VERSION := "0.4.0"
 REGISTRY_HOST ?= "docker.io"
 REGISTRY_USER ?= "$(USER)"
 

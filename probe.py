@@ -14,7 +14,7 @@ import sys
 import psutil
 import yaml
 
-__version__ = "0.3.2"
+__version__ = "0.4.0"
 
 parser = argparse.ArgumentParser(allow_abbrev = False)
 

@@ -7,7 +7,7 @@ import uuid
 from test_utils import *
 import docker.errors
 
-probe_version = "0.3.2"
+probe_version = "0.4.0"
 probe = lambda client, *args, **kwargs: docker_container(
     client, "probe:" + probe_version, ("--to-stdout",) + args, **kwargs)
 
