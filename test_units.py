@@ -38,6 +38,19 @@ class IntegrationTests (unittest.TestCase):
                     self.assertTrue(key in report["env"])
                     self.assertEqual(value, report["env"][key])
 
+    def test_content_listing(self):
+        with docker_client() as client:
+            with probe(client, "--show-content", ".") as stdout:
+                report = json.loads(stdout)
+                self.assertTrue("content" in report)
+                self.assertTrue(len(report["content"]) > 0)
+                found_file = False
+                for entry in report["content"]:
+                    if (entry["path"] == "./probe.py"):
+                        self.assertEqual("file", entry["type"])
+                        found_file = True
+                self.assertTrue(found_file)
+
     def test_arguments_parsing(self):
         args = ["--long", "-s", "1234", "a b c", "'a b c'"]
         with docker_client() as client:

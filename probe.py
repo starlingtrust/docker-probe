@@ -2,6 +2,7 @@
 
 import argparse
 import datetime
+import hashlib
 import platform
 import pwd
 import grp
@@ -106,6 +107,13 @@ if (args.show_disks):
 
     report.update(disks = partitions)
 
+def _MD5_sum(filename, blocksize = 65536):
+    hash = hashlib.md5()
+    with open(filename, "rb") as f:
+        for block in iter(lambda: f.read(blocksize), b""):
+            hash.update(block)
+    return hash.hexdigest()
+
 def _format_permissions(st_mode):
     to_str = {'7':'rwx', '6' :'rw-', '5' : 'r-x', '4':'r--', '0': '---'}
     return "".join(to_str.get(x, x) for x in str(oct(st_mode)[-3:]))
@@ -121,18 +129,17 @@ if (args.show_content is not None):
                     yield from tree(entry.path)
 
     for path in args.show_content:
-        if (not os.path.isdir(path)):
-            content = "NOT_FOUND"
-        else:
+        if (os.path.isfile(path)):
+            content = [{"path": path, "type": "file", "hash": _MD5_sum(path)}]
+
+        elif (os.path.isdir(path)):
             content = []
             for entry in tree(path):
+                is_folder = entry.is_dir()
                 entry_stats = entry.stat()
 
-                permissions = _format_permissions(entry_stats.st_mode)
-                if (entry.is_dir()):
-                    permissions = "d" + permissions
-                else:
-                    permissions = "-" + permissions
+                permissions = "d" if (is_folder) else "-"
+                permissions += _format_permissions(entry_stats.st_mode)
 
                 try:
                     user = pwd.getpwuid(entry_stats.st_uid).pw_name
@@ -144,20 +151,25 @@ if (args.show_content is not None):
                 except KeyError:
                     group = "UNKNOWN"
 
-                content.append({
+                entry_details = {
                     "path": entry.path,
+                    "type": "folder" if is_folder else "file",
                     "size": entry_stats.st_size,
                     "size_readable": "{:,}".format(entry_stats.st_size),
                     "permissions": permissions,
-                    "user": user, "group": group})
+                    "user": user, "group": group}
+
+                if (not is_folder):
+                    entry_details["hash"] = _MD5_sum(entry.path)
+                
+                content.append(entry_details)
 
             if (len(content) > 0):
                 content.sort(key = lambda entry: entry["path"])
-            else:
-                content = "EMPTY"
+        else:
+            content = [{"path": path, "type": "UNKNOWN"}]
 
-        report["content"].append({
-            "path": path, "content": content})
+        report["content"].extend(content)
 
 if (args.show_env):
     report["env"] = dict(os.environ)
