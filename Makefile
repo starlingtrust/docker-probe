@@ -1,15 +1,16 @@
 
 IMAGE_NAME := "probe"
 IMAGE_VERSION := "0.4.0"
-REGISTRY_HOST ?= "docker.io"
-REGISTRY_USER ?= "$(USER)"
+
+REGISTRY_HOSTNAME ?= "docker.io"
+REGISTRY_USERNAME ?= "$(USER)"
 
 LOCAL_IMAGE := "$(IMAGE_NAME)"
-REMOTE_IMAGE := "$(REGISTRY_HOST)/$(REGISTRY_USER)/$(IMAGE_NAME)"
+REMOTE_IMAGE := "$(REGISTRY_HOSTNAME)/$(REGISTRY_USERNAME)/$(IMAGE_NAME)"
 
 .PHONY: build_image
 build_image:
-	@docker build --squash --rm \
+	@docker build --rm \
 	  --tag $(LOCAL_IMAGE):$(IMAGE_VERSION) \
 	  --tag $(LOCAL_IMAGE):latest .
 
