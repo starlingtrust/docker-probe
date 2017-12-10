@@ -1,0 +1,14 @@
+sudo: required
+services:
+  - docker
+
+language: python
+python: ["3.6"]
+
+install:
+  - pip install pipenv
+  - pipenv install --dev
+  - docker build --rm --tag probe:0.4.0 .
+
+script:
+  - python ./test_units.py

@@ -26,6 +26,6 @@ push_image: build_image
 	@docker push $(REMOTE_IMAGE):$(IMAGE_VERSION)
 	@docker push $(REMOTE_IMAGE):latest
 
-.PHONY: test
-test: build_image
+.PHONY: test_image
+test_image: build_image
 	@python -B ./test_units.py
