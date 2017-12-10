@@ -14,6 +14,8 @@ script:
   - make test_image
 
 after_success:
+  # push the image to DockerHub, but only if
+  # we're running this build from master
   - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}};
     if [ "${BRANCH}" == "master" ]; then
       docker login -u "$REGISTRY_USERNAME" -p "$REGISTRY_PASSWORD";
