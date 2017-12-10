@@ -14,7 +14,8 @@ script:
   - make test_image
 
 after_success:
-  - if ["$TRAVIS_BRANCH" == "master"]; then
+  - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}};
+    if [ "${BRANCH}" == "master" ]; then
       docker login -u "$REGISTRY_USERNAME" -p "$REGISTRY_PASSWORD";
-      make push_image
+      make push_image;
     fi
