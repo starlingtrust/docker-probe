@@ -1,5 +1,7 @@
 ## Probe
 
+[![Build Status](https://travis-ci.org/starlingtrust/docker-probe.svg)](https://travis-ci.org/starlingtrust/docker-probe)
+
 **Probe** is a [Docker](https://www.docker.com/)ized lightweight command-line utility that can be used to test Docker-based dataflow pipelines by acting as a dummy job.
 
 **Probe** can also report on the (virtual) hardware and software environment found inside the Docker container it runs inside of. **Probe** can export its report in JSON or YAML format, suitable for downstream parsing. This makes it possible to run integration tests for dataflow pipelines, confirming that jobs receive the resources (CPU, memory and disk) they requested to run.
