@@ -8,7 +8,13 @@ python: ["3.6"]
 install:
   - pip install pipenv
   - pipenv install --dev
-  - docker build --rm --tag probe:0.4.0 .
+  - make build_image
 
 script:
-  - python ./test_units.py
+  - make test_image
+
+after_success:
+  - if ["$TRAVIS_BRANCH" == "master"]; then
+      docker login -u "$REGISTRY_USERNAME" -p "$REGISTRY_PASSWORD";
+      make push_image
+    fi
